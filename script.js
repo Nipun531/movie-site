@@ -20,11 +20,11 @@ async function fetchmovies(){
         const movieCard = document.createElement("div");
         movieCard.classList.add("movie_item")
 
-        movieCard.innerHTML = 
+        movieCard.innerHTML = `
         <img src="https://image.tmbd.org/t/p/w500/${backdrop_path}" class="movie_img_rounded">
             <div class = "title">${title || name}</div>
             <div class = "title">${release_date}</div>
-            ;
+            `;
             return movieCard;
     }
     fetchMovies();
