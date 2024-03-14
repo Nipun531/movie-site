@@ -5,14 +5,194 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Trending Movies and TV Shows</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='style.css'>
-    <script src='script.js'></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        
+        body{
+            font-family: courier,sans-serif;
+            text-align:center;
+            font-size:32px;
+            color:white;
+            background-color: #032541;
+        }
+        .nav{
+            display: flex;
+            border-bottom: 2px solid white;
+            padding-bottom:0px ;
+        }
+        .nav li{
+            list-style: none;
+            display: flex;
+            font-size: 20px;
+        }
+        .nav h2{
+            margin-top: 2px;
+            margin-left: 20vw;
+            margin-bottom: 0px;
+        }
+        .nav a:link{
+            color: white;
+            text-decoration: none;
+        }
+        .nav a:visited{
+            color: white;
+            text-decoration: none;
+        }
+
+        .card {
+            background-color: #02223e;
+        }
+        @keyframes movie_item {
+            from {
+                background-color: #02223e;
+                color: white;
+                
+                
+
+            }
+            to {
+                background-color: lightblue;
+                color: black;
+                
+                font-weight: bold;
+                
+            }
+
+            
+        }
+        
+
+        #Movies {
+            display: flex;
+            margin: 10vw;
+            flex-wrap: wrap;
+            
+             
+        }
+        
+        .movie_item {
+            margin-bottom: 5vh;
+            display: flex;
+            animation-duration:40s;
+            animation-delay: -20s;
+            animation-iteration-count: infinite;
+            
+           
+            
+        }
+        .movie_item:hover{
+            padding: 2rem 2rem 0rem 2rem;
+            animation-name: movie_item;
+            
+        }
+        .movie_item a:link{
+            color: white;
+            font-size: 20px;
+            
+        }
+        .movie_item a:visited{
+            color: white;
+            
+        }
+        .title{
+            padding: 16px;
+            font-size: 2rem;
+            font-weight: bold;
+
+        }
+        
+        
+        
+        .movie_item ul{
+            list-style: none;
+            font-size: 1rem;
+            padding-right: 40px;
+            
+        }
+        
+        .info{
+            font-size: 1rem;
+            overflow: hidden;
+            margin-left: 80px;
+            
+            
+        }
+        
+        .movie_img_rounded{
+            border-radius: 3rem;
+            width: 30vw;
+            
+        }
+        
+    </style>
+    
+    
 </head>
 <body>
-    <h1>Trending Movies and TV Shows</h1>
-    <div id="Movies"></div>
-
-    <script src="script.js"></script>
+    <div class="nav">
+        <li>
+            <ul><a href="trending.html">Trending</a></ul>
+            <ul><a href="toprated.html">Top</a></ul>
+        </li>
+        <h2>MOVIE DATABASE</h2>
+    </div>
     
+    <h1>Trending This Week</h1>
+    
+    <div id="Movies"></div>
+    
+
+
+    
+    <script>
+        const apiUrl =` https://api.themoviedb.org/3/trending/all/week?api_key=39b9aac46ce7636a73c0fd526aab1fb5`;
+        const moviesContainer = document.getElementById("Movies");
+        const IMG_URL = "https://image.tmbd.org/t/p/w500";
+
+        async function fetchMovies() {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                data.results.forEach(media => {
+                    const movieCard = createMovieCard(media);
+                    moviesContainer.appendChild(movieCard);
+                });
+            } catch (error) {
+                console.error("error fetching data:", error);
+            }
+        }
+        
+
+        function createMovieCard(media) {
+            const { title, name, backdrop_path,release_date,vote_average,overview,id} = media;
+            const movieCard = document.createElement("div");
+            movieCard.classList.add("movie_item")
+
+            movieCard.innerHTML = `
+              
+            <img src="https://image.tmdb.org/t/p/w500${backdrop_path}" class="movie_img_rounded">
+            <div class="movie_text">
+                    <div class="title">${title || name}</div>
+                    <div class="about_movie">
+                        <ul>
+                            <li>Release:${release_date}</li>
+                            <li>Score:${vote_average}</li>
+                        </ul>
+                        
+                        <div class="info">${overview}</div>
+                        <a href="https://www.themoviedb.org/movie/${id}-${title}">See more..</a>
+                    </div>
+            </div>
+            
+
+                
+            `;
+            return movieCard;
+        }
+
+        fetchMovies();
+            </script>
+            
 </body>
 </html>
