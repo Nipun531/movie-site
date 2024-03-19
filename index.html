@@ -1,139 +1,29 @@
 <!DOCTYPE html>
+
 <html>
 <head>
     <meta charset='utf-8'>
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Trending Movies and TV Shows</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-        
-        body{
-            font-family: courier,sans-serif;
-            text-align:center;
-            font-size:32px;
-            color:white;
-            background-color: #032541;
-        }
-        .nav{
-            display: flex;
-            border-bottom: 2px solid white;
-            padding-bottom:0px ;
-        }
-        .nav li{
-            list-style: none;
-            display: flex;
-            font-size: 20px;
-        }
-        .nav h2{
-            margin-top: 2px;
-            margin-left: 20vw;
-            margin-bottom: 0px;
-        }
-        .nav a:link{
-            color: white;
-            text-decoration: none;
-        }
-        .nav a:visited{
-            color: white;
-            text-decoration: none;
-        }
-
-        .card {
-            background-color: #02223e;
-        }
-        @keyframes movie_item {
-            from {
-                background-color: #02223e;
-                color: white;
-                
-                
-
-            }
-            to {
-                background-color: lightblue;
-                color: black;
-                
-                font-weight: bold;
-                
-            }
-
-            
-        }
-        
-
-        #Movies {
-            display: flex;
-            margin: 10vw;
-            flex-wrap: wrap;
-            
-             
-        }
-        
-        .movie_item {
-            margin-bottom: 5vh;
-            display: flex;
-            animation-duration:40s;
-            animation-delay: -20s;
-            animation-iteration-count: infinite;
-            
-           
-            
-        }
-        .movie_item:hover{
-            padding: 2rem 2rem 0rem 2rem;
-            animation-name: movie_item;
-            
-        }
-        .movie_item a:link{
-            color: white;
-            font-size: 20px;
-            
-        }
-        .movie_item a:visited{
-            color: white;
-            
-        }
-        .title{
-            padding: 16px;
-            font-size: 2rem;
-            font-weight: bold;
-
-        }
-        
-        
-        
-        .movie_item ul{
-            list-style: none;
-            font-size: 1rem;
-            padding-right: 40px;
-            
-        }
-        
-        .info{
-            font-size: 1rem;
-            overflow: hidden;
-            margin-left: 80px;
-            
-            
-        }
-        
-        .movie_img_rounded{
-            border-radius: 3rem;
-            width: 30vw;
-            
-        }
-        
-    </style>
-    
+    <link rel="stylesheet" href="style.css">  
     
 </head>
 <body>
     <div class="nav">
-        <li>
-            <ul><a href="trending.html">Trending</a></ul>
-            <ul><a href="toprated.html">Top</a></ul>
+        <ul>
+            <li><a href="trending.html">Trending</a></li>
+            <li>
+                <div class="top">
+                    <div class="top1">TOP</div>
+                    <div class="top2"><a href="topmovies.html">Movie</a></div>
+                    <div class="top3"><a href="toptv.html">TV</a></div>
+                        
+                    
+                </div>                                   
         </li>
+                
+    </ul> 
         <h2>MOVIE DATABASE</h2>
     </div>
     
@@ -154,7 +44,7 @@
                 const response = await fetch(apiUrl);
                 const data = await response.json();
 
-                data.results.forEach(media => {
+                data.results.forEach((media) => {
                     const movieCard = createMovieCard(media);
                     moviesContainer.appendChild(movieCard);
                 });
