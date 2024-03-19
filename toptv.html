@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="nav">
+        <ul>
+            <li><a href="trending.html">Trending</a></li>
+            <li>
+                <div class="top">
+                    <div class="top1">TOP</div>
+                    <div class="top2"><a href="topmovies.html">Movie</a></div>
+                    <div class="top3"><a href="toptv.html">TV</a></div>
+                        
+                    
+                </div>                                   
+        </li>
+                
+    </ul>
+        <h2>MOVIE DATABASE</h2>
+    </div>
+    
+    <h1>Top Rated TV</h1>
+    
+    <div id="Movies"></div>
+
+    <script>
+        const apiUrl =` https://api.themoviedb.org/3/tv/top_rated?api_key=39b9aac46ce7636a73c0fd526aab1fb5`;
+        const moviesContainer = document.getElementById("Movies");
+        const IMG_URL = "https://image.tmbd.org/t/p/w500";
+
+        async function fetchMovies() {
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                data.results.forEach((media) => {
+                    const movieCard = createMovieCard(media);
+                    moviesContainer.appendChild(movieCard);
+                });
+            } catch (error) {
+                console.error("error fetching data:", error);
+            }
+        }
+        
+
+        function createMovieCard(media) {
+            const { title, name, backdrop_path,release_date,vote_average,overview,id} = media;
+            const movieCard = document.createElement("div");
+            movieCard.classList.add("movie_item")
+
+            movieCard.innerHTML = `
+              
+            <img src="https://image.tmdb.org/t/p/w500${backdrop_path}" class="movie_img_rounded">
+            <div class="movie_text">
+                    <div class="title">${title || name}</div>
+                    <div class="about_movie">
+                        <ul>
+                            <li>Release:${release_date}</li>
+                            <li>Score:${vote_average}</li>
+                        </ul>
+                        
+                        <div class="info">${overview}</div>
+                        <a href="https://www.themoviedb.org/tv/${id}-${title}">See more..</a>
+                    </div>
+            </div>
+            
+
+                
+            `;
+            return movieCard;
+        }
+
+        fetchMovies();
+    </script>
+</body>
+</html>
